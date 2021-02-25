@@ -1,0 +1,82 @@
+<html>
+	<head>
+		<style>
+			.err{
+				color: #FF0000;
+				}
+		</style>
+	</head>
+	<body bgcolor = "#aba313">
+		<?php
+			$n_err="";
+			$e_err="";
+			$g_err="";
+			$name=$email=$gender="";
+			//To check whether the data is here or not.
+			if($_SERVER["REQUEST_METHOD"]=="POST")
+			{
+				if(empty($_POST["name"]))
+				{
+					$n_err = "Name is missing";
+				}
+				else
+				{
+					$name=$_POST["name"];
+				}
+				if(empty($_POST["email"]))
+				{
+					$n_err = "Email-ID is missing";
+				}
+				else
+				{
+					if(filter_var($email, FILTER_VALIDATE_EMAIL))
+					{
+						$e_err = " E-mail ID is not Valid!";
+					}
+					else
+					{
+						$email=$_POST["email"];
+					}
+				}
+				if(empty($_POST["gender"]))
+				{
+					$n_err = "Gender is missing";
+				}
+				else
+				{
+					$gender = $_POST["gender"];
+				}
+				function test_input($data)
+				{
+					$data-trim($data);
+					$data-stripslashes($data);
+					$data-htmlspecialchars($data);
+					return $data;
+				}
+			}
+		?>
+		
+		<h1>Registration</h1>
+		<p><span class="err">* Mandatory</p>
+		<form method="POST" action="<?php $_SERVER["PHP_SELF"]?>">
+			<table align = 'center'>
+				<tr><td>Name: </td><td><input type="text" name='name'> <span class="err"> * <?php echo $n_err; ?></td></tr>
+				
+				<tr><td>Email ID: </td><td> <input type="text" name="email"> <span class="err"> * <?php echo $e_err; ?></td></tr>
+				
+				<tr> <td>Gender: </td><td><input type="radio" name="gender" value="Female">Female <input type="radio" name="gender" value="Male">Male <span class="err"> * <?php echo $g_err; ?></td></tr>
+				
+				<tr><td> <input type="submit" name="submit" value="submit"></td></tr>
+			</table>
+		</form>
+        <?php
+            echo "information stored:";
+			echo "<br>";
+            echo $name;
+			echo "<br>";
+			echo $email;
+			echo "<br>";
+			echo $gender;
+        ?>
+	</body>
+</html
